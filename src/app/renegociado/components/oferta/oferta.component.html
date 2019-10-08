@@ -1,0 +1,215 @@
+<div class="container">
+    <div class="main">
+        <div class="header image">
+            <div class="position-center">
+                <h1 class="title">Para que estés más tranquilo</h1>
+                <span class="subtitle">Consolida tus deudas aquí con un Crédito Personal</span>
+            </div>
+            <div *ngIf="ofertable && tieneAlgunaDeuda" class="box">
+                <div class="box-header">
+                    <div class="box-ico">
+                        <span class="ico-circle green">
+                <i class="icon-payment-accounts"></i>
+              </span>
+                    </div>
+                    <div class="box-title">
+                        <h2 class="">Detalle de tu deuda al día</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="ofertable && tieneAlgunaDeuda" class="content">
+            <div class="zonaDeuda">
+                <app-loading [cambioEstado]="localLoadingBehavior.asObservable()" [embebido]="true"></app-loading>
+                <app-contenedor-acordeon *ngIf="tieneDeudas(deudas.creditosConsumo.total, deudas.creditosConsumo.listado)" titulo="Créditos Personales" (eventoAbiertoCerrado)="onClickAcordeon('CC');" [eventoIniciar]="eventoAbrirCreditos.asObservable()">
+                    <table class="table term">
+                        <thead>
+                            <tr>
+                                <th>Tus Créditos</th>
+                                <th>Deuda Total</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let credito of deudas.creditosConsumo.listado; index as idx">
+                                <td>Cr&eacute;dito N&deg;&nbsp;{{ credito.contrato | numeroContrato }}</td>
+                                <td>{{ credito.deudaTotal | backendCurrencyFormat }}</td>
+                                <td class="text-center" [ngClass]="credito.alDia ? 'green' : 'yellow'"><b>{{ credito.descripcionEstado }}</b></td>
+                                <td class="text-center">
+                                    <a class="btn-icon js-modal" href="#modal01" (click)="abrirDetalle('CC', credito.contrato);">
+                                        <i class="icon-payment-accounts"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td *ngIf="cargaInicial" colspan="3" class="text-right">{{ deudas.creditosConsumo.total | backendCurrencyFormat }}</td>
+                                <td *ngIf="!cargaInicial" colspan="3" class="text-left">{{ deudas.creditosConsumo.totalAlDia | backendCurrencyFormat }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </app-contenedor-acordeon>
+
+                <app-contenedor-acordeon *ngIf="tieneDeudas(deudas.tarjetasCredito.totalCLP, deudas.tarjetasCredito.listado) || tieneDeudas(deudas.tarjetasCredito.totalUSD, deudas.tarjetasCredito.listado)" titulo="Tarjeta(s) de crédito" (eventoAbiertoCerrado)="onClickAcordeon('TC');"
+                    [eventoIniciar]="eventoAbrirTarjetas.asObservable()">
+                    <table class="table term">
+                        <thead>
+                            <tr>
+                                <th>Tus Tarjetas</th>
+                                <th>Deuda Total</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let tarjeta of deudas.tarjetasCredito.listado; index as idx">
+                                <td>
+                                    <app-display-tarjeta-credito [descripcion]="tarjeta.descripcion | backendDescripcionTarjeta" [numero]="tarjeta.nroTarjeta" [codigo]="tarjeta.descripcion.substring(2, 6)"></app-display-tarjeta-credito>
+                                </td>
+                                <td><b>{{ tarjeta.deudaCLP | backendCurrencyFormat }}</b> <br *ngIf="mostrarMonto(tarjeta.deudaUSD)"> <span *ngIf="mostrarMonto(tarjeta.deudaUSD)" class="light">{{ tarjeta.deudaUSD | backendCurrencyFormat : 'USD' : true : true }}</span>                                    </td>
+                                <td class="text-center" [ngClass]="tarjeta.descripcionEstado && tarjeta.descripcionEstado.trim() === 'Al dia' ? 'green' : 'yellow'"><b>{{ tarjeta.descripcionEstado }}</b></td>
+                                <td class="text-center">
+                                    <a class="btn-icon js-modal" href="#modal03" (click)="abrirDetalle('TC', tarjeta.contrato);">
+                                        <i class="icon-payment-accounts"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td *ngIf="cargaInicial" colspan="3" Class="text-right">
+                                    <div class="text-left" style="display: inline-block">{{ deudas.tarjetasCredito.totalCLP | backendCurrencyFormat }}<br *ngIf="mostrarMonto(deudas.tarjetasCredito.totalUSD)"></div>
+                                </td>
+                                <td *ngIf="!cargaInicial" colspan="3" class="text-left">
+                                    <div class="text-left" style="display: inline-block">{{ deudas.tarjetasCredito.totalCLPAlDia | backendCurrencyFormat }}<br *ngIf="mostrarMonto(deudas.tarjetasCredito.totalUSDAlDia)"></div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </app-contenedor-acordeon>
+
+                <app-contenedor-acordeon *ngIf="tieneDeudas(deudas.lineasCredito.totalCLP, deudas.lineasCredito.listado)" titulo="Línea(s) de crédito en cuenta(s) corriente(s)" (eventoAbiertoCerrado)="onClickAcordeon('LC');" [eventoIniciar]="eventoAbrirLineas.asObservable()">
+                    <table class="table term">
+                        <thead>
+                            <tr>
+                                <th>Línea de Crédito</th>
+                                <th>Deuda Total</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Detalle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let linea of deudas.lineasCredito.listado; index as idx">
+                                <td>{{ linea.contrato | numeroContrato }}</td>
+                                <td>{{ linea.deudaTotal | backendCurrencyFormat : linea.moneda }}</td>
+                                <td class="text-center" [ngClass]="linea.descripcionEstado && linea.descripcionEstado.trim() === 'Al dia' ? 'green' : 'yellow'">
+                                    <b>{{ (linea.descripcionEstado ? linea.descripcionEstado : 'Al dia') }}</b>
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn-icon js-modal" href="#modal02" (click)="abrirDetalle('LC', linea.contrato);">
+                                        <i class="icon-payment-accounts"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>Total</td>
+                                <td *ngIf="cargaInicial" colspan="3" class="text-right">
+                                    <div class="text-left" style="display: inline-block">{{ deudas.lineasCredito.totalCLP | backendCurrencyFormat }}</div>
+                                </td>
+                                <td *ngIf="!cargaInicial" colspan="3" class="text-left">
+                                    <div class="text-left" style="display: inline-block">{{ deudas.lineasCredito.totalCLPAlDia | backendCurrencyFormat }}</div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </app-contenedor-acordeon>
+                <div *ngIf="tieneAlgunaDeuda" class="box collapse mb15 open no-gutter" stete="1">
+                    <div class="box-container">
+                        <div class="box-content">
+                            <table class="table term">
+                                <tbody>
+                                    <tr class="no-border">
+                                        <td class="big-text"><b class="green">Deuda Total</b></td>
+                                        <td *ngIf="cargaInicial" class="big-text"><b class="green">
+                                        {{ deudas.deudaTotal | backendCurrencyFormat }}</b>
+                                            <br *ngIf="mostrarMonto(deudas.deudaTotalUSD)">
+                                        </td>
+                                        <td *ngIf="!cargaInicial" class="big-text"><b class="green">
+                                      {{ deudas.deudaTotalAlDia | backendCurrencyFormat }}</b>
+                                            <br *ngIf="mostrarMonto(deudas.deudaTotalUSDAlDia)">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="tieneAlgunaDeuda" class="box mb15">
+                <div class="box-header mb30">
+                    <div class="box-title">
+                        <strong>Elige las opciones para solicitar un nuevo Crédito Personal y poder consolidar tu deuda total.</strong>
+                    </div>
+                </div>
+                <div class="box-content">
+                    <form action="" class="form" [formGroup]="formGroup">
+                        <div class="wrapper">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-field select">
+                                        <label class="form-label">Plazo del Crédito</label>
+                                        <select [formControl]="formGroup.get('plazoSeleccionado')" name="plazoCredito" class="form-select" [ngClass]="formGroup.get('plazoSeleccionado').value && formGroup.get('plazoSeleccionado').value !== 'null'? 'active' : ''" required="">
+                                            <option  *ngFor="let plazo of plazosCredito" [value]="plazo.codigo">{{ plazo.label }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-field calendar">
+                                        <input [formControl]="formGroup.get('primerVencimiento')" [min]="primerVencimientoMinimo" [max]="primerVencimientoMaximo" (click)="picker.open()" name="primerVencimiento" class="form-input clase" [ngStyle]="{'border-color': '#1BB3BC'}" matInput [matDatepicker]="picker"
+                                            readonly placeholder="">
+                                        <label class="form-label">Primer vencimiento</label>
+                                        <mat-datepicker-toggle class="mat-icon-button-custom" matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker touchUi #picker></mat-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="segurosVisibles.cesantia || segurosVisibles.desgravamen || segurosVisibles.vida" class="form-field">
+                            <span class="form-label">Selecciona tu Seguro</span>
+                            <div *ngIf="segurosVisibles.cesantia" class="check mr15">
+                                <input [formControl]="formGroup.get('seguroCesantia')" type="checkbox" name="cesantia" id="cesantia">
+                                <label for="cesantia">Seguro Cesantía</label>
+                            </div>
+                            <div *ngIf="segurosVisibles.desgravamen" class="check mr15">
+                                <input [formControl]="formGroup.get('seguroDesgravamen')" type="checkbox" name="desgravamen" id="desgravamen">
+                                <label for="desgravamen">Seguro Desgravamen</label>
+                            </div>
+                        </div>
+                    </form>
+                    <app-notificacion [mensaje]="'La contratación de Seguros es opcional y serán financiados con el monto bruto del crédito.'"></app-notificacion>
+                </div>
+            </div>
+            <div *ngIf="verBotonSimular" class="actions">
+                <button type="button" [disabled]="!formGroup.valid || btnEnEjecucion" (click)="onClickSimular()" class="btn btn-primary btn-ico">
+                    <span>Simular</span>
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </div>
+            <app-cond-generales [url]="'assets/external/condiciones_generales.html'"></app-cond-generales>
+        </div>
+        <div *ngIf="!ofertable || !tieneAlgunaDeuda" class="content">
+            <app-notificacion [mensaje]="'Cliente no ofertable'" [tipo]="'warn'"></app-notificacion>
+        </div>
+    </div>
+</div>
+<app-dialogo-cred-csmo *ngIf="verDetalleCreditoCsmo" [display]="verDetalleCreditoCsmo" [data]="detalleCreditoCsmoData" (dialogoCerrado)="cerrarDetalle('CC')"></app-dialogo-cred-csmo>
+<app-dialogo-cta-cte *ngIf="verDetalleCtaCte" [display]="verDetalleCtaCte" [data]="detalleCuentaCteData" (dialogoCerrado)="cerrarDetalle('LC')"></app-dialogo-cta-cte>
+<app-dialogo-tarjetas *ngIf="verDetalleTarjetas" [display]="verDetalleTarjetas" [data]="detalleTarjetasData" (dialogoCerrado)="cerrarDetalle('TC')"></app-dialogo-tarjetas>
+<app-alerta [display]="dialogoError.ver" [tipoAlerta]="'error'" [titulo]="dialogoError.titulo" [detalle]="dialogoError.detalle" [nombreAccion1]="'Aceptar'" (clickAccion1)="this.dialogoError.ver = false">
+</app-alerta>

@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="main">
+        <div class="row">
+            <div class="col-12">
+                <div class="gutter">
+                    <p class="mb0">Resultado simulación de nuevo crédito</p>
+                </div>
+            </div>
+        </div>
+        <div class="box no-gutter mb10">
+            <div class="box-container">
+                <div class="box-content">
+                    <app-resumen [data]="data"></app-resumen>
+                </div>
+            </div>
+        </div>
+        <app-detalle-simulacion [data]="data" [flagVer]="true">
+        </app-detalle-simulacion>
+        <div class="legal">
+            <p class="text">La contratación de este crédito es sin derecho a retracto. Monto Bruto del Crédito: Monto Solicitado + Impuestos + Gastos de Notario + Gastos de Seguros (cuando éstos hayan sido solicitados). Los valores mensuales de los seguros son referenciales
+                y no incluyen intereses. Para tomar el crédito de consumo no es necesario tomar seguros ni contratar otros servicios. Los resultados de esta simulación son referenciales. Los valores son aproximados y válidos por el día de la simulación
+                (Valor dólar, Deuda Total de productos a refinanciar a la fecha). Esta simulación no constituye aprobación. El monto del crédito está sujeto a evaluación individual en línea.</p>
+        </div>
+    </div>
+</div>

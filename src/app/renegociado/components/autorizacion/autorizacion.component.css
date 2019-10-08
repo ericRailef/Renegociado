@@ -1,0 +1,31 @@
+/* div.divScroll {
+    width: 100%;
+    height: 550px;
+    overflow: auto;
+} */
+
+figure {
+    display: table;
+    border: 3px ridge grey;
+    position: relative;
+    width: 96vw;
+    min-height: 250px;
+    height: auto;
+    margin: 0 auto 35px;
+  }
+  
+  figcaption {
+    border: 3px ridge grey;
+    text-align: center;
+    font: 900 20px/1.5 Verdana;
+    padding: 0 0 8px 0;
+    background: rgba(51, 51, 51, 0.3);
+    color: #fff;
+  }
+
+iframe,
+object,
+embed {
+  overflow: hidden;
+  position: absolute;
+}

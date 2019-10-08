@@ -1,0 +1,42 @@
+{
+    "server": {
+        "host": "http://localhost:8089",
+        "canalLogico": "003",
+        "usuarioAltair": "GHOBJ",
+        "entidad": "0035",
+        "idOrigen": "RCAM",
+        "contenidoExterno": "/assets/external"
+    },
+    "data": {
+        "tipoSociedades": {
+            "sociedades": [
+                { "codigo": "SA", "descripcion": "SOCIEDAD POR ACCIONES" },
+                { "codigo": "ST", "descripcion": "SOCIEDAD RESPONSABILIDAD LTDA" },
+                { "codigo": "SC", "descripcion": "SOCIEDAD COLECTIVA" },
+                { "codigo": "SE", "descripcion": "SOCIEDAD EN COMANDITA" },
+                { "codigo": "BC", "descripcion": "BENEFICIARIO CONTROL" },
+                { "codigo": "BD", "descripcion": "BENEFICIARIO DIRECTOR" },
+                { "codigo": "BF", "descripcion": "BENEFICIARIO" },
+                { "codigo": "DI", "descripcion": "AE-DIRECTIVO" },
+                { "codigo": "FL", "descripcion": "AE-FILIAL" },
+                { "codigo": "PC", "descripcion": "PERSONA DE CONTROL" },
+                { "codigo": "RP", "descripcion": "REPRESENTANTE LEGAL" },
+                { "codigo": "R1", "descripcion": "REPRESENTANTE LEGAL 1" },
+                { "codigo": "R2", "descripcion": "REPRESENTANTE LEGAL 2" },
+                { "codigo": "SG", "descripcion": "SOCIO GESTOR" },
+                { "codigo": "SM", "descripcion": "SOCIO COMANDITARIO" },
+                { "codigo": "00", "descripcion": "PERSONA DE CONTROL" },
+                { "codigo": "OT", "descripcion": "OTRAS RELACIONES" }
+            ],
+            "avales": [
+                { "codigo": "RE", "descripcion": "SOCIEDAD RESPONSABILIDAD LTDA" },
+                { "codigo": "SC", "descripcion": "SOCIEDAD COLECTIVA" },
+                { "codigo": "SCM", "descripcion": "SOCIEDAD EN COMANDITA" },
+                { "codigo": "SA", "descripcion": "SOCIEDAD ANÓNIMA" }
+            ]
+        },
+        "desafio": {
+            "errores": []
+        }
+    }
+}

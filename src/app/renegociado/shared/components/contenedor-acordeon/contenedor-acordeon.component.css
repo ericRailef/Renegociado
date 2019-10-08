@@ -1,0 +1,375 @@
+.p-accordion {
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.p-footer {
+    font-size: 10px;
+}
+
+.reading {
+    padding: 15px;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.reading>*:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .reading {
+        text-align: justify;
+    }
+}
+
+.box {
+    border-radius: 4px;
+    display: block;
+    position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    background-color: #fff;
+    max-width: 830px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    color: #444;
+}
+
+.box .box-header {
+    display: table;
+}
+
+.box .box-header>* {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.box .box-header.half {
+    width: 100%;
+}
+
+.box .box-header.half>* {
+    width: 50%;
+}
+
+.box .box-header.half>*:first-child {
+    text-align: left;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header.half>*:first-child {
+        width: 70%;
+    }
+}
+
+.box .box-header.half>*:last-child {
+    text-align: right;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header.half>*:last-child {
+        width: 30%;
+    }
+}
+
+.box .box-header .box-action .btn-collpase {
+    vertical-align: middle;
+}
+
+.box .box-header .box-action strong {
+    vertical-align: middle;
+}
+
+.box .box-header .box-action i {
+    color: #ec0000;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header .box-action .btn-collpase {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .box .box-header .box-action strong {
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .box .box-header .box-action strong span {
+        display: block;
+    }
+}
+
+.box .box-header.separate {
+    padding: 15px;
+    border-bottom: solid 1px #ddd;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header.separate {
+        padding: 10px;
+    }
+}
+
+.box .box-header.invert {
+    background-color: #444444;
+    color: White;
+    padding: 20px;
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header.invert {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-header {
+        font-size: 12px;
+    }
+}
+
+.box .box-title {
+    color: #444;
+}
+
+@media screen and (max-width: 768px) {
+    .box .box-title {
+        font-size: 12px;
+    }
+}
+
+.box .box-title h2 {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    line-height: 100%;
+}
+
+.box.collapse.pad0 {
+    padding: 0;
+}
+
+.box.collapse .box-header {
+    padding: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .box.collapse .box-header {
+        padding: 10px;
+    }
+}
+
+.box.collapse .box-header.separate {
+    border-bottom: solid 1px #DDDDDD;
+}
+
+.box.collapse .box-header .btn-collpase {
+    display: inline-block;
+    transition: all .3s ease-in-out;
+    width: 14px;
+    height: 14px;
+    overflow: hidden;
+}
+
+.box.collapse .box-header .btn-collpase:hover {
+    text-decoration: none;
+}
+
+.box.collapse .box-container {
+    max-height: 0;
+    overflow: hidden;
+    transition: all .3s ease-in-out;
+}
+
+.box.collapse.open .box-header .btn-collpase {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.box.collapse.open .box-container {
+    max-height: 900px;
+}
+
+@media screen and (max-width: 768px) {
+    .box.collapse.open .box-container {
+        max-height: 9000px;
+    }
+}
+
+.box.datatable {
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    padding-bottom: 50px;
+    transition: all .3s ease-in-out;
+}
+
+.box.datatable.extend_detail {
+    padding-bottom: 69px;
+}
+
+.box.datatable .box-header {
+    padding: 15px;
+    position: relative;
+    z-index: 10;
+    background-color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .box.datatable .box-header {
+        padding: 10px;
+    }
+}
+
+.box.datatable .box-header.separate {
+    border-bottom: solid 1px #DDDDDD;
+}
+
+.box.datatable .box-header .btn-collpase {
+    display: inline-block;
+    transition: all .3s ease-in-out;
+    width: 14px;
+    height: 14px;
+    overflow: hidden;
+}
+
+.box.datatable .box-header .btn-collpase:hover {
+    text-decoration: none;
+}
+
+.box.datatable .box-container {
+    position: absolute;
+    z-index: 9;
+    max-height: inherit;
+    width: 100%;
+    bottom: 0;
+}
+
+.box.datatable.open .btn-collpase {
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.box.no-gutter {
+    padding: 0;
+}
+
+.box.box-indicator {
+    text-align: center;
+    display: block;
+    margin-top: 55px;
+    max-width: 680px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    padding-top: 38px;
+}
+
+.box.box-indicator .box-icon {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: -28px;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.box.box-indicator .box-icon i:before {
+    line-height: 56px;
+}
+
+.box.box-indicator .alert-text {
+    font-size: 12px;
+}
+
+.box .box-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 72px;
+    display: inline-block;
+    line-height: 58px;
+    font-size: 28px;
+    vertical-align: middle;
+    margin-bottom: 15px !important;
+}
+
+.box .box-icon.box-icon-alert {
+    background-color: #EC0000;
+    color: #fff;
+}
+
+.box .box-icon.box-icon-success {
+    background-color: #ABC111;
+    color: #fff;
+}
+
+.box.box-banner {
+    display: table;
+    width: 680px;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0;
+}
+
+.box.box-banner>* {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.box.box-banner .box-image {
+    width: 272px;
+    height: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media screen and (max-width: 768px) {
+    .box.box-banner .box-image {
+        min-height: 150px;
+        width: 100%;
+    }
+}
+
+.box.box-banner .box-container {
+    padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+    .box.box-banner .box-container {
+        padding: 10px;
+    }
+}
+
+.box.box-banner .box-accions {
+    padding: 0;
+    padding-right: 20px;
+    width: 130px;
+}
+
+@media screen and (max-width: 768px) {
+    .box.box-banner .box-accions {
+        padding-right: 10px;
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .box.box-banner {
+        display: block;
+        width: 100%;
+    }
+    .box.box-banner>* {
+        display: block;
+    }
+}

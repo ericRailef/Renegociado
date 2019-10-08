@@ -1,0 +1,219 @@
+<div class="container">
+    <div class="main">
+        <div id="page1" class="page active">
+            <app-barra-pasos [pasos]="2" [actual]="{ 'paso': 1, 'nombre': 'CONFIRMACIÓN' }"></app-barra-pasos>
+            <p class="text center-align">Para consolidar tus deudas y confirmar tu Crédito Personal, ingresa los siguientes datos.</p>
+            <div class="box">
+                <form [formGroup]="formGroup" class="form mt10">
+                    <div class="wrapper">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-field material">
+                                    <input [formControl]="formGroup.get('telefono')" name="telefono" type="text" class="form-input " required="" placeholder="+56 9 XXXXXXXX" autocomplete="off" [appTelefono]="{ tipoTelefono: 'C', formControl: formGroup.get('telefono') }">
+                                    <label class="form-label" [ngClass]="formGroup.get('telefono').touched && formGroup.get('telefono').invalid ? 'invalid' : ''">Teléfono</label>
+                                    <div *ngIf="formGroup.get('telefono').touched && formGroup.get('telefono').invalid">
+                                        <label *ngIf="formGroup.get('telefono').errors['minlength']" class="leyenda text-danger">
+                                            Campo obligatorio
+                                        </label>
+                                        <label *ngIf="!formGroup.get('telefono').errors['minlength'] && formGroup.get('telefono').errors['telefonoInvalido']" class="leyenda text-danger">
+                                          Debes ingresar un valor válido
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-field material">
+                                    <input [formControl]="formGroup.get('email')" name="email" type="text" class="form-input " required="" placeholder="Ejemplo@ejemplo.com" autocomplete="off" maxlength="150">
+                                    <label class="form-label" [ngClass]="formGroup.get('email').touched && formGroup.get('email').invalid ? 'invalid' : ''">Email</label>
+                                    <div *ngIf="formGroup.get('email').touched && formGroup.get('email').invalid">
+                                        <label class="leyenda text-danger">
+                                          Campo obligatorio
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-field">
+                                    <label class="form-label">Cuenta de cargo de crédito</label>
+                                    <p>Cta Cte {{cuentaCorrienteCargo | numeroContrato}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 brd-top">
+                                <div class="gutter no-gutter-bottom">
+                                    <div class="check mr15">
+                                        <input type="checkbox" name="acept" id="acept" [formControl]="formGroup.get('autorizacion')">
+                                        <label for="acept">Autorizo a Banco Santander que las cuotas de mi Crédito Personal sean cargadas mensualmente en la cuenta corriente seleccionada anteriormente, de acuerdo a la fecha de vencimiento.&nbsp;<span
+                                          *ngIf="formGroup.get('autorizacion').touched && formGroup.get('autorizacion').invalid" class="text-danger">Debes autorizar el cargo</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="center-align">
+                <div class="form">
+                    <div class="form-field inline">
+                        <div class="field-column pt20 pb10" style="width: 65%">
+                            <span class="form-label">Participación en sociedades</span>
+                        </div>
+                        <div class="field-column pt20 pb10">
+                            <div class="radio mr15">
+                                <input type="radio" name="part_soc" id="part_soc_si" [(ngModel)]="participaSociedades" value="S">
+                                <label for="part_soc_si">Si</label>
+                            </div>
+                            <div class="radio mr15">
+                                <input type="radio" name="part_soc" id="part_soc_no" [(ngModel)]="participaSociedades" value="N">
+                                <label for="part_soc_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="(resultadoValidacionesManuales.errorAlMenosUnaSociedad && participaSociedades === 'S')">
+                <label class="leyenda text-danger" style="margin-left: 20%">
+                  Debe ingresar al menos una Sociedad
+                </label>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="(resultadoValidacionesManuales.errorCompletarSocidedad && participaSociedades === 'S')">
+                <label class="leyenda text-danger" style="margin-left: 20%">
+                    Debe completar la Sociedad
+                </label>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="resultadoValidacionesManuales.errorSeleccioneRadioParticipacionSoc && participaSociedades !== 'S' && participaSociedades !== 'N'">
+                <label class="msg-instruccion" style="margin-left: 2%; ">
+                Debes ingresar información de  al menos una sociedad (todos los campos son requeridos). De lo contrario seleccionar No para continuar
+              </label>
+            </div>
+            <div *ngIf="participaSociedades === 'S'" class="box no-gutter">
+                <app-crud-participacion [modo]="'participacion'" [data]="sociedadesParticipacion" [disabled]="!participaSociedades || participaSociedades === 'N'" (dataModificada)="onChangeCrudSociedades($event)"></app-crud-participacion>
+            </div>
+            <div class="center-align">
+                <div class="form">
+                    <div class="form-field inline">
+                        <div class="field-column pb10" [ngClass]="participaSociedades === 'S' ? 'pt20' : ''" style="width: 65%">
+                            <span class="form-label">Soy Aval y/o fiador de un Crédito</span>
+                        </div>
+                        <div class="field-column pb10" [ngClass]="participaSociedades === 'S' ? 'pt20' : ''">
+                            <div class="radio mr15">
+                                <input type="radio" name="aval" id="aval_si" value="S" [(ngModel)]="esAvalOFiador">
+                                <label for="aval_si">Si</label>
+                            </div>
+                            <div class="radio mr15">
+                                <input type="radio" name="aval" id="aval_no" value="N" [(ngModel)]="esAvalOFiador">
+                                <label for="aval_no">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="(resultadoValidacionesManuales.errorAlMenosUnAval && esAvalOFiador === 'S')">
+                <label class="leyenda text-danger" style="margin-left: 20%">
+                   Debe ingresar al menos un Aval
+                </label>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="(resultadoValidacionesManuales.errorCompletarAval && esAvalOFiador === 'S')">
+                <label class="leyenda text-danger" style="margin-left: 20%">
+                   Debe completar el Aval
+                </label>
+            </div>
+            <div style="padding-bottom: 20px;" *ngIf="resultadoValidacionesManuales.errorSeleccioneRadioEsAvalOFiador && esAvalOFiador !== 'S' && esAvalOFiador !== 'N'">
+                <label class="msg-instruccion" style="margin-left: 2%">
+                  Debes ingresar información de  al menos un aval (todos los campos son requeridos). De lo contrario seleccionar No para continuar
+              </label>
+            </div>
+            <div *ngIf="esAvalOFiador === 'S'" class="box no-gutter mb10">
+                <app-crud-participacion [modo]="'aval'" [data]="sociedadesAval" [disabled]="!esAvalOFiador || esAvalOFiador === 'N'" (dataModificada)="onChangeCrudAvalOFiador($event)"></app-crud-participacion>
+            </div>
+            <!-- declaración de salud -->
+            <div class="segDesgravamen" *ngIf="segDesgravamen">
+                <hr>
+                <p class="text center-align">Declaración Personal de Salud</p>
+                <div class="box no-gutter mb10">
+                    <a href="javascript:;" class="link full comp" (click)="abrirDPS();">
+                        <span class="ico"><i class="icon-document"></i></span>
+                        <span class="text">Lee Declaraci&oacute;n Personal de Salud</span>
+                        <span class="action"><i class="icon-arrow-right"></i></span>
+                    </a>
+                </div>
+                <!-- fin declaración de salud -->
+                <div class="box no-gutter mb10">
+                    <app-notificacion [mensaje]="'En caso de tener preexistencias, debes declararlas antes de aceptar tu declaración personal de salud.'" [customClass]="'mt0'"></app-notificacion>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="gutter">
+                                <div class="radio mr15" (change)="tienePreExistencias = false">
+                                    <input type="radio" name="preexistencia" id="preexistencia_no" value="N" [(ngModel)]="radioTienePreExistencias" (change)="$event ? displayAlertaPreexistencia = true : displayAlertaPreexistencia = false">
+                                    <label for="preexistencia_no">No tengo ninguna de estas preexistencias.</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 brd-top">
+                            <div class="gutter">
+                                <div class="radio mr15" (change)="tienePreExistencias = true">
+                                    <input type="radio" name="preexistencia" id="preexistencia_si" value="S" [(ngModel)]="radioTienePreExistencias">
+                                    <label for="preexistencia_si">Declaro tener alguna de estas preexistencias u otra.</label>
+                                </div>
+                                <br>
+                                <label class="leyenda text-danger" *ngIf="resultadoValidacionesManuales.errorSeleccioneRadioPreExistencias === true && segDesgravamen && radioTienePreExistencias !== 'S' && radioTienePreExistencias !== 'N'">
+                                  Campo obligatorio
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-12" id="declaration" [ngStyle]="tienePreExistencias ? { display: 'block'} : ''">
+                            <div class="gutter">
+                                <div class="form-field material full mb0">
+                                    <input [(ngModel)]="preExistencias" type="text" class="form-text_area" [ngClass]="tienePreExistencias && (!preExistencias || preExistencias.length === 0) ? 'ng-touched ng-dirty ng-invalid' : ''" maxlength="100">
+                                    <label class="form-label">Ingresa preexistencias</label>
+                                    <div *ngIf="tienePreExistencias && (!preExistencias || preExistencias.length === 0)">
+                                        <label class="leyenda text-danger">
+                                            Campo obligatorio
+                                        </label>
+                                    </div>
+                                    <app-contador-caracteres [maximo]="100" [texto]="preExistencias"></app-contador-caracteres>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gutter">
+                <div class="actions flex">
+                    <app-boton-volver-inicio (whenError)="verificarErrorVolver($event)"></app-boton-volver-inicio>
+                    <button id="next-page" [disabled]="botonGuardarEnEjecucion" (click)="onClickGuardar()" class="btn btn-secundary">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-alerta [display]="displayAlertaPreexistencia" [detalle]="'Estimado Cliente'" [detalle2]="'Te recordamos que en caso de que el siniestro se produzca por algunas de las enfermedades o preexistencias indicadas en la declaración personal de salud, la compañía no estará obligada a efectuar indemnización alguna.'"
+    [tipoAlerta]="'conf'" [nombreAccion1]="'Aceptar'" (clickAccion1)="displayAlertaPreexistencia = false;" (accionCerrar)="displayAlertaPreexistencia = false;"></app-alerta>
+
+<app-alerta [display]="dialogoError.ver" [tipoAlerta]="'error'" [titulo]="dialogoError.titulo" [detalle]="dialogoError.detalle" [nombreAccion1]="'Aceptar'" (clickAccion1)="this.dialogoError.ver = false">
+</app-alerta>
+
+<!-- Dialog dps -->
+<div *ngIf="showDPS" class="modal__bg" style="display: block;"></div>
+<div *ngIf="showDPS" class="modal-dps" id="modal__name" style="display: block;">
+    <div class="modal__content">
+        <span class="modal__close">
+            <a href="javascript:;" class="modal-btn" (click)="cerrarDPS()">
+                <i class="icon-input-error"></i>
+            </a>
+        </span>
+        <div class="modal__body">
+            <span class="modal__icon"><i class="icon-information"></i></span>
+            <h2>Declaración Personal de Salud</h2>
+            <div class="scroll_text" [innerHTML]="declaracionPersonalSaludHtml">
+
+            </div>
+            <div class="modal__action">
+                <a class="btn-dps btn--primary" (click)="cerrarDPS()">Aceptar</a>
+            </div>
+        </div>
+    </div>
+</div>

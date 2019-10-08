@@ -1,0 +1,83 @@
+<app-contenedor-acordeon *ngIf="verRebajaCierre" [collapse]="true" titulo="Rebaja de Cupos y Cierre de Productos">
+    <table class="table term">
+        <thead>
+            <tr>
+                <th>Productos</th>
+                <th class="text-center">Cupo Actual</th>
+                <th class="text-center">Nuevo cupo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let miLista of data.modificacionProductosTC">
+                <td>
+                    <app-display-tarjeta-credito [descripcion]="miLista.descripcion | backendDescripcionTarjeta" [numero]="miLista.numeroTarjeta" [codigo]="miLista.descripcion.substring(2, 6)"></app-display-tarjeta-credito>
+                </td>
+                <td class="text-center"><b>{{miLista.cupoActualPesos | backendCurrencyFormat}}</b> <br> <span class="light">{{miLista.cupoActualDolar | backendCurrencyFormat : 'USD'}}</span></td>
+                <td *ngIf="!cierreProducto(miLista.cupoNuevoPesos) && !cierreProducto(miLista.cupoNuevoDolar)" class="text-center"><b>{{miLista.cupoNuevoPesos | backendCurrencyFormat}}</b> <br> <span class="light">{{miLista.cupoNuevoDolar | backendCurrencyFormat : 'USD'}}</span></td>
+                <td *ngIf="cierreProducto(miLista.cupoNuevoPesos) || cierreProducto(miLista.cupoNuevoDolar)" class="text-center"><b>Cierre de producto</b> <br> <span class="light">&nbsp;</span></td>
+            </tr>
+            <tr *ngFor="let miLista of data.modificacionProductosLCA">
+                <td>Línea de crédito {{miLista.contrato | numeroContrato}}</td>
+                <td class="text-center"><b>{{miLista.cupoActualPesos | backendCurrencyFormat}}</b></td>
+                <td *ngIf="!cierreProducto(miLista.cupoNuevoPesos)" class="text-center"><b>{{miLista.cupoNuevoPesos | backendCurrencyFormat}}</b></td>
+                <td *ngIf="cierreProducto(miLista.cupoNuevoPesos)" class="text-center"><b>Cierre de producto</b></td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="gutter">
+        <app-notificacion [mensaje]="'Nuevo cupo sin monto definido. Esta condición corresponde al cierre de productos que se detalla en el listado anterior.'"></app-notificacion>
+    </div>
+</app-contenedor-acordeon>
+
+<app-contenedor-acordeon [collapse]="true" [subtitulo]="montoUSDValido(data.valorDolar) ? 'Valor dolar' : null" [valor]="montoUSDValido(data.valorDolar) ? (data.valorDolar | backendDolar) : null" titulo="Deudas a Refinanciar">
+    <table class="table term">
+        <thead class="no-border">
+            <tr>
+                <th>Tus productos</th>
+                <th class="text-center">Deuda Total</th>
+                <th class="text-center">Total Prepago</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let miLista of data.sistemaOrigenUG">
+                <td>Crédito N° {{miLista.contrato | numeroContrato}}</td>
+                <td class="text-center">{{miLista.deudaTotal | backendCurrencyFormat}}</td>
+                <td class="text-center">{{miLista.deudaPrepago | backendCurrencyFormat}}</td>
+            </tr>
+            <tr *ngFor="let miLista of data.sistemaOrigenMP">
+                <td>
+                    <app-display-tarjeta-credito [descripcion]="miLista.descripcion | backendDescripcionTarjeta" [numero]="miLista.numeroTarjeta" [codigo]="miLista.descripcion.substring(2, 6)"></app-display-tarjeta-credito>
+                </td>
+                <td class="text-center">
+                    <strong>{{miLista.deudaTotalCLP | backendCurrencyFormat}}</strong>
+                    <br>
+                    <span class="light">{{miLista.deudaTotalUSD | backendCurrencyFormat : 'USD' : true : true }}</span>
+                </td>
+                <td class="text-center">{{miLista.duedaPrepago | backendCurrencyFormat}}</td>
+            </tr>
+
+            <tr *ngFor="let miLista of data.sistemaOrigeLCA">
+                <td>Línea de crédito {{miLista.contrato | numeroContrato}}</td>
+                <td class="text-center">{{miLista.deudaTotal | backendCurrencyFormat}}</td>
+                <td class="text-center">{{miLista.deudaPrepago | backendCurrencyFormat}}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Monto líquido</td>
+                <td class="text-center">&nbsp;</td>
+                <td class="text-center">{{ data.montoLiquidoDeudasRefinanciar | backendCurrencyFormat }}</td>
+            </tr>
+        </tfoot>
+    </table>
+    <app-notificacion *ngIf="flagVer" [mensaje]="'Operacion sin derecho a retracto'" [tipo]="'warn'" [customClass]="'mt0'"></app-notificacion>
+</app-contenedor-acordeon>
+<div class="actions flex" *ngIf="flagVer">
+    <app-boton-volver-inicio (whenError)="verificarErrorVolver($event)"></app-boton-volver-inicio>
+    <button class="btn btn-primary btn-ico" (click)="onClickSiguiente()" [disabled]="btnSiguienteEnEjecucion">
+    <span>Siguiente</span>
+    <i class="icon-arrow-right"></i>
+</button>
+</div>
+<app-alerta [display]="dialogoError.display" [tipoAlerta]="'error'" [titulo]="dialogoError.titulo" [detalle]="dialogoError.detalle" [nombreAccion1]="'Aceptar'" (clickAccion1)="this.dialogoError.display = false">
+</app-alerta>

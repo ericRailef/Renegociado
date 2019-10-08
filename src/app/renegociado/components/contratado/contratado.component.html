@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="main">
+        <app-barra-pasos [pasos]="2" [actual]="{ 'paso': 2, 'nombre': 'CONFIRMACIÓN' }"></app-barra-pasos>
+        <div class="box box-indicator no-gutter mb20">
+            <span class="box-icon box-icon-success">
+          <i class="icon-check"></i>
+        </span>
+            <div class="box-content text-center">
+                <div class="gutter">
+                    <h2 class="title medium mb10">Tu Crédito Personal ha sido contratado.</h2>
+                    <div class="line mt10 mb10"></div>
+                    <p class="text mt10 mb10">Una copia de este contrato fue enviada a tu email <b>{{email}}</b></p>
+                    <p class="text small mb0">En el email de comprobante del crédito de consumo encontraras adjunto copia del Contrato de Crédito de Consumo contratado, mandato para suscripción y llenado de pagaré, copia de contrato de servicios automatizados y propuestas de seguros,
+                        en caso de que corresponda. Le recordamos que ante cualquier consulta o duda puede llamar a VOX al (600) 320 3000.</p>
+                </div>
+            </div>
+        </div>
+        <app-contenedor-acordeon [collapse]="true" [headerExtraClass]="'separate'" titulo="Resúmen del crédito">
+            <app-resumen [data]="data"></app-resumen>
+        </app-contenedor-acordeon>
+        <app-detalle-simulacion [data]="data" [flagVer]="false">
+        </app-detalle-simulacion>
+        <!-- <div class="actions text-center"> -->
+        <!-- <a href="#" class="link comp">
+                <span class="text">Ir a la página de inicio</span>
+                <span class="ico xsmall">
+                        <i class="icon-arrow-right"></i>
+                    </span>
+            </a> -->
+        <!-- </div>
+            <div class="box box-banner mb20">
+                <div class="box-image" style="background-image:url('img/foto-banner.jpg');">
+
+                </div>
+                <div class="box-container">
+                    <strong class="text text-big">Alfonso, contrata el Plan Santander Lanpass</strong>
+                    <p class="text text-small mt20 mb0">Y podrás acumular hasta 3.000 KMS. LATAM Pass mensuales.</p>
+                </div>
+                <div class="box-accions text-right">
+                    <a href="#" class="link comp">
+                        <span class="text">Contratar</span>
+                        <span class="ico xsmall">
+                            <i class="icon-arrow-right"></i>
+                        </span>
+                    </a>
+                </div>
+
+            </div> -->
+        <!-- </div> -->
+    </div>

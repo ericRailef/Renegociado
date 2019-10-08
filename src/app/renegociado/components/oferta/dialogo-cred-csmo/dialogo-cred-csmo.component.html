@@ -1,0 +1,59 @@
+<div *ngIf="display" class="layer" [ngStyle]="{'display': 'block'}"></div>
+<div *ngIf="display" id="modal01" class="modal active">
+    <div class="modal-container">
+        <div class="modal-header">
+            <strong class="modal-title">Cr&eacute;dito</strong>&nbsp;N&deg;&nbsp;{{ data.contrato | numeroContrato }}
+            <a class="modal-btn js-close-modal" (click)="cerrarDialogo();">
+                <i class="icon-input-error"></i>
+            </a>
+        </div>
+        <div class="modal-content">
+            <dl class="def center mt20">
+                <dt class="term">Deuda Total </dt>
+                <dd class="value highlight">{{ data.montoDeudaTotal | backendCurrencyFormat }}</dd>
+            </dl>
+            <div class="line dashed mt20 mb10"></div>
+            <dl class="def inline text-center">
+                <dt class="term">Total Prepago</dt>
+                <dd class="value">&nbsp;{{ data.montoDeudaPrepago | backendCurrencyFormat }}</dd>
+            </dl>
+            <div class="line mt10 mb20"></div>
+            <div class="gutter">
+                <div class="row">
+                    <div class="col-4">
+                        <dl class="def block">
+                            <dt class="term">Nº Operación</dt>
+                            <dd class="value">{{ data.contrato | numeroContrato }}</dd>
+                            <dt class="term">Fecha Otorgamiento</dt>
+                            <dd class="value">{{ data.fechaOtorgamiento | backendFecha }}</dd>
+                            <dt class="term">Interés Capital</dt>
+                            <dd class="value">{{data.interesCapital | backendCurrencyFormat }}</dd>
+                            <dt class="term">Nº de cuotas Pagadas/Pactadas</dt>
+                            <dd class="value">{{ data.nCuotasPagadas | backendNumero }}/{{ data.nCuotasPactadas | backendNumero }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-4">
+                        <dl class="def block">
+                            <dt class="term">Moneda Origen</dt>
+                            <dd class="value">{{ data.monedaOrigen }}</dd>
+                            <dt class="term">Valor Cuota</dt>
+                            <dd class="value">{{ data.valorCuota | backendCurrencyFormat }}</dd>
+                            <dt class="term">Interés Mora</dt>
+                            <dd class="value">{{ data.interesMora | backendCurrencyFormat }}</dd>
+                        </dl>
+                    </div>
+                    <div class="col-4">
+                        <dl class="def block">
+                            <dt class="term">Monto Otorgado</dt>
+                            <dd class="value">{{ data.montoOtorgado | backendCurrencyFormat }}</dd>
+                            <dt class="term">Saldo Capital Adeudado</dt>
+                            <dd class="value">{{ data.saldoCapital | backendCurrencyFormat }}</dd>
+                            <dt class="term">Comisión de Prepago</dt>
+                            <dd class="value">{{ data.comisionPre | backendCurrencyFormat }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

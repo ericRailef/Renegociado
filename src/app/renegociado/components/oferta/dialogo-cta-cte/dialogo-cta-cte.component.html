@@ -1,0 +1,39 @@
+<div *ngIf="display" class="layer" [ngStyle]="{'display': 'block'}"></div>
+<div *ngIf="display" id="modal02" class="modal active">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-7">
+                    <span class="modal-title"><b>Línea de Crédito</b> Nº {{ data.contrato | numeroContrato }}</span>
+                </div>
+                <div class="col-5 text-right">
+                    Asoc. a CC Nº {{ data.ctaAsociada | numeroContrato }}
+                </div>
+            </div>
+            <a class="modal-btn js-close-modal" (click)="cerrarDialogo();">
+                <i class="icon-input-error"></i>
+            </a>
+        </div>
+        <div class="modal-content">
+            <dl class="def center mt20">
+                <dt class="term">Deuda Total</dt>
+                <dd class="value highlight">{{ data.deudaTotal | backendCurrencyFormat }}</dd>
+            </dl>
+            <div class="line dashed mt20"></div>
+            <div class="row">
+                <div class="col-6 brd-right">
+                    <dl class="def inline text-center gutter">
+                        <dt class="term">Cupo&nbsp;</dt>
+                        <dd class="value">{{ data.cupoOtorgado | backendCurrencyFormat }}</dd>
+                    </dl>
+                </div>
+                <div class="col-6">
+                    <dl class="def inline text-center gutter">
+                        <dt class="term">Cupo Utilizado&nbsp;</dt>
+                        <dd class="value">{{ data.cupoUtilizado | backendCurrencyFormat }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<div [ngClass]="mainClass" [ngStyle]="collapse ? '' : {'padding-bottom': paddingSize}">
+    <div class="box-header half" [ngClass]="headerExtraClass" (click)="onClickHeader()">
+        <div class="box-title">
+            <strong>{{ titulo }}</strong>
+        </div>
+        <div class="box-action">
+            <strong *ngIf="subtitulo">{{subtitulo}} <span class="green">{{valor}}</span></strong>
+            <a href="javascript:;" class="btn-collpase" [ngClass]="subtitulo ?  'ml10' : '' ">
+                <i class="icon-arrow-down"></i>
+            </a>
+        </div>
+    </div>
+    <div class="box-container" [ngStyle]="collapse ? {'max-height': paddingSize} : ''">
+        <div class="box-content" #content>
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

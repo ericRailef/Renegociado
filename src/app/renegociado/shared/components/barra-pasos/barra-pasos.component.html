@@ -1,0 +1,10 @@
+<div class="steps mt10 mb20">
+    <div class="steps__item">
+        <span>{{ actual.paso }}</span>
+        <p>{{ actual.nombre.toUpperCase() }}</p>
+    </div>
+    <div class="status__number">PASO {{ actual.paso }}/{{ pasos }}</div>
+    <div class="status__line">
+        <span *ngFor="let clazz of _auxPasos" [ngClass]="clazz"></span>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="{{tipo === 'info' ? 'alert info' : 'alert warning'}}" [ngClass]="customClass">
+    <div class="alert-icon">
+        <div class="ico-circle" [ngClass]="tipos[tipo].color">
+            <i class="icon-information"></i>
+        </div>
+    </div>
+    <div class="alert-content">
+        <p *ngIf="tipo === 'info'" class="alert-text" [innerHTML]="mensaje"></p>
+        <b *ngIf="tipo === 'warn'" class="alert-text" [innerHTML]="mensaje"></b>
+    </div>
+</div>

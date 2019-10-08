@@ -1,0 +1,118 @@
+<div class="gutter">
+    <dl class="def center mt20">
+        <dt class="term">Valor Cuota</dt>
+        <dd class="value highlight">{{data.valorCuota | backendCurrencyFormat}}</dd>
+    </dl>
+    <dl class="def inline text-center">
+        <dt class="term">TOTAL CUOTAS MENSUALES </dt>
+        <dd class="value">&nbsp;{{toNumber(data.totalCuotaMensuales)}}</dd>
+    </dl>
+    <div class="line dashed mt20 mb10"></div>
+    <dl class="def inline text-center">
+        <dt class="term">MONTO BRUTO</dt>
+        <dd class="value">&nbsp;{{data.montoBruto | backendCurrencyFormat}}</dd>
+    </dl>
+</div>
+<div class="line mt10 mb20"></div>
+<div class="gutter">
+    <div class="row">
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term">Monto líquido</dt>
+                <dd class="value">{{data.montoLiquido | backendCurrencyFormat}}</dd>
+                <dt class="term">Tasa de interés mensual</dt>
+                <dd class="value">{{data.tasaMensual | backendTax}}</dd>
+            </dl>
+        </div>
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term">Costo total del Crédito</dt>
+                <dd class="value">{{data.montoaPagar | backendCurrencyFormat}}</dd>
+                <dt class="term">Tasa interés anual</dt>
+                <dd class="value">{{data.tasaAnual | backendTax}}</dd>
+            </dl>
+        </div>
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term cian">Fecha primer vencimiento</dt>
+                <dd class="value cian"> {{data.fechaPrimerVencimiento | date : 'dd/MM/yyyy' }} </dd>
+            </dl>
+        </div>
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term">CAE</dt>
+                <dd class="value">{{data.CAE | backendTax}}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<div class="line dashed mb10 mt10"></div>
+<div class="gutter">
+    <div class="row">
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term">Impuesto</dt>
+                <dd class="value">{{data.impuesto | backendCurrencyFormat}}</dd>
+            </dl>
+        </div>
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term">Gastos Notarial</dt>
+                <dd class="value">{{data.gastoNotarial | backendCurrencyFormat}}</dd>
+            </dl>
+        </div>
+        <div class="col-3">
+            <dl class="def block">
+                <dt class="term cian">Gastos Totales</dt>
+                <dd class="value cian">{{data.gastosTotales | backendCurrencyFormat}}</dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<table *ngIf="data.selSegDesgravamen === 'S' || data.selSegCesantia === 'S' || data.selSegVida === 'S'" class="table term">
+    <thead>
+        <tr>
+            <th>SEGUROS VOLUNTARIOS</th>
+            <th>VALOR MENSUAL*</th>
+            <th>VALOR TOTAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="data.selSegDesgravamen === 'S'">
+            <td>Desgravamen</td>
+            <td>{{data.seguroDesgravamenMensual | backendCurrencyFormat}}</td>
+            <td>{{data.seguroDesgravamenTotal | backendCurrencyFormat }}</td>
+        </tr>
+        <tr *ngIf="data.selSegCesantia === 'S'">
+            <td>Cesantía</td>
+            <td>{{data.seguroCesantiaMensual | backendCurrencyFormat}}</td>
+            <td>{{data.seguroCesantiaTotal | backendCurrencyFormat}}</td>
+        </tr>
+        <!-- <tr *ngIf="data.selSegVida === 'S'">
+            <td>Vida</td>
+            <td>{{data.seguroVidaMensual | backendCurrencyFormat}}</td>
+            <td>{{data.seguroVidaTotal | backendCurrencyFormat}}</td>
+        </tr> -->
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total</td>
+            <td>{{data.totalSeguroMensual | backendCurrencyFormat}}</td>
+            <td>{{data.totalSeguroTotal | backendCurrencyFormat}}</td>
+        </tr>
+    </tfoot>
+</table>
+<div class="gutter">
+    <app-notificacion [mensaje]="'Esta simulación es para el prepago de deudas vigentes y podría considerar rebaja de cupos y/o cierre de productos. * El valor mensual de la prima de seguros contratados es referencial.'" [customClass]="'mt0'"></app-notificacion>
+</div>
+<div class="line"></div>
+<div *ngIf="verSeguroDesgravamen || verSeguroCesantia" class="box no-gutter mb10">
+    <div class="row">
+        <div *ngIf="verSeguroCesantia" class="brd-right" [ngClass]="!verSeguroDesgravamen ? 'col-12' : 'col-6'">
+            <app-visualizador-archivos [descripcion]="'Condiciones generales seguro de cesantía'" [file]="'assets/external/Condiciones generales seguro de cesantia.pdf'"></app-visualizador-archivos>
+        </div>
+        <div *ngIf="verSeguroDesgravamen" class="brd-right" [ngClass]="!verSeguroCesantia ? 'col-12' : 'col-6'">
+            <app-visualizador-archivos [descripcion]="'Condiciones generales seguro de desgravamen'" [file]="'assets/external/Condiciones generales seguro de desgravamen.pdf'"></app-visualizador-archivos>
+        </div>
+    </div>
+</div>

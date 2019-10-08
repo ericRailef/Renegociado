@@ -1,0 +1,109 @@
+<table class="table minimal mobile">
+    <thead class="no-border">
+        <tr>
+            <th *ngFor="let nomColumna of modalidadSel.columnas">{{ nomColumna }}</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let fila of data; let idx = index">
+            <td>
+                <span class="term">{{ modalidadSel.columnas[0] }}</span>
+                <span class="val">
+                  <div class="form-field material mb0 not-label">
+                    <input type="text" class="form-input " [ngClass]="fila.uiValidators.errores.rut['hayErrores'] ? 'ng-touched ng-dirty ng-invalid' : ''" [(ngModel)]="fila.rut" [appValidadorRut]="{ tipo: modo, data: data, fila: fila}" (change)="onChangeRow()" (blur)="validarRutYActualizarFront($event.target, modo, fila)">
+                    <div *ngIf="fila.uiValidators.errores.rut['hayErrores']" style="position: absolute;">
+                      <label *ngIf="fila.uiValidators.errores.rut['invalido']" class="leyenda text-danger">
+                        Debes ingresar un valor válido
+                      </label>
+                      <label *ngIf="!fila.uiValidators.errores.rut['invalido'] && fila.uiValidators.errores.rut['empresa']" class="leyenda text-danger">
+                          Debe Ingresar un Rut sobre 50.000.000
+                      </label>
+                      <label *ngIf="fila.uiValidators.errores.rut['duplicado']" class="leyenda text-danger">
+                          El rut ya existe
+                      </label>
+                    </div>
+                  </div>
+                </span>
+            </td>
+            <td>
+                <span class="term">{{ modalidadSel.columnas[1] }}</span>
+                <span class="val">
+                  <div class="form-field material mb0 not-label">
+                    <input type="text" class="form-input " [(ngModel)]="fila.razonSocial" (blur)="validarRazonSocial($event.target.value, fila)" (change)="onChangeRow()" [readOnly]="((fila.uiValidators) && (fila.uiValidators.rsLock)) ? true : false" [ngClass]="fila.uiValidators.errores.razonSocial['hayErrores'] ? 'ng-touched ng-dirty ng-invalid' : (fila.uiValidators && fila.uiValidators.rsLock && fila.uiValidators.errores.razonSocial['fueTocado'] ? 'razonsocial-sololectura' : '')">
+                    <div style="position: absolute;">
+                      <label *ngIf="fila.uiValidators.errores.razonSocial['hayErrores']" class="leyenda text-danger">
+                        Campo obligatorio
+                      </label>
+                    </div>
+                  </div>
+                </span>
+            </td>
+            <td>
+                <span class="term">{{ modalidadSel.columnas[2] }}</span>
+                <span class="val">
+                  <div *ngIf="modo === 'participacion'" class="form-field material mb0 not-label">
+                    <input type="text" class="form-input" [(ngModel)]="fila.capital" [appPorcentaje]="{tipo: 'capital', fila: fila}" (change)="onChangeRow()" (blur)="validarPorcentaje($event.target.value, 'capital', fila)" [ngClass]="fila.uiValidators.errores.capital['hayErrores'] ? 'ng-touched ng-dirty ng-invalid' : ''">
+                  </div>
+                  <div *ngIf="modo === 'participacion' && fila.uiValidators.errores.capital['hayErrores']" style="position: absolute;">
+                    <label class="leyenda text-danger">Campo obligatorio</label>
+                  </div>
+
+                  <div *ngIf="modo === 'aval'" class="form-field select mb0">
+                    <select name="" id="" class="form-select" [(ngModel)]="fila.fianzaSolidaria" (change)="onChangeRow()">
+                      <option value="true" selected="">Si</option>
+                      <option value="false">No</option>
+                    </select>
+                  </div>
+                </span>
+            </td>
+            <td>
+                <span class="term">{{ modalidadSel.columnas[3] }}</span>
+                <span class="val">
+                  <div class="form-field material mb0 not-label">
+                    <input type="text" class="form-input " [(ngModel)]="fila.utilidad" (change)="onChangeRow()" (blur)="validarPorcentaje($event.target.value, modo, fila)" [appPorcentaje]="{ tipo: modo, fila: fila}" [ngClass]="fila.uiValidators.errores.utilidad['hayErrores'] ? 'ng-touched ng-dirty ng-invalid' : ''">
+                  </div>
+                  <div *ngIf="fila.uiValidators.errores.utilidad['hayErrores']" style="position: absolute;">
+                    <label class="leyenda text-danger">Campo obligatorio</label>
+                  </div>
+                </span>
+            </td>
+            <td>
+                <span class="term">{{ modalidadSel.columnas[4] }}</span>
+                <span class="val">
+                  <div class="form-field select mb0">
+                    <select name="" id="" class="form-select" [ngStyle]="fila.uiValidators.errores.tipoSociedad['hayErrores'] ? { 'border-bottom': 'solid 2px #EC0000' } : { 'border-bottom': 'solid 2px #1BB3BC' }" [(ngModel)]="fila.tipoSociedad" (change)="onChangeRow()" (blur)="validarTipoSociedad($event.target.value, fila)">
+                      <option value="" selected disabled>Seleccione</option>
+                      <option *ngFor= "let sociedad of sociedades; let i = index" [value]="sociedad.codigo">{{sociedad.descripcion}}</option>
+                    </select>
+                    <div style="position: absolute;">
+                      <label *ngIf="fila.uiValidators.errores.tipoSociedad['hayErrores']" class="leyenda text-danger">
+                        Campo obligatorio
+                      </label>
+                    </div>
+                  </div>
+                </span>
+            </td>
+            <td class="text-center">
+                <span class="term">Eliminar</span>
+                <span class="val">
+                  <a class="btn-icon" href="javascript:;" (click)="eliminar(idx)">
+                    <i class="icon-trash"></i>
+                  </a>
+                </span>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot class="no-border">
+        <tr>
+            <td colspan="6" class="text-center">
+                <a href="javascript:;" class="link comp" (click)="agregar();">
+                    <span class="ico small">
+                        <i class="icon-more"></i>
+                    </span>
+                    <span class="text">Agregar sociedad</span>
+                </a>
+            </td>
+        </tr>
+    </tfoot>
+</table>

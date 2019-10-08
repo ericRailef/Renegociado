@@ -1,0 +1,78 @@
+<div *ngIf="display" class="layer" [ngStyle]="{'display': 'block'}"></div>
+<div *ngIf="display" id="modal03" class="modal active">
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-8">
+                    <span>{{ data.descripcionProducto | backendDescripcionTarjeta }}</span>
+                    <br>
+                    <span [class]="claseTarjeta">{{ data.numeroTarjeta | maskCreditcard }}</span>
+                </div>
+                <div class="col-4 text-right">
+                    <strong *ngIf="montoUSDValido(data.valorUSD)">Valor dolar <span class="green">{{ data.valorUSD | backendDolar }}</span></strong>
+                </div>
+            </div>
+            <a class="modal-btn js-close-modal" (click)="cerrarDialogo();">
+                <i class="icon-input-error"></i>
+            </a>
+        </div>
+        <div class="modal-content">
+            <table class="table term minimal">
+                <thead class="no-border">
+                    <tr>
+                        <th>Detalle de deudas</th>
+                        <th class="text-center">Deuda Total</th>
+                        <th class="text-center">Deuda Prepago</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Deuda Facturada</td>
+                        <td class="text-center">{{ data.deudaFacturada | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoDeudaFact | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deuda de Compras (con y sin intererés)</td>
+                        <td class="text-center">{{ data.totalDeudaCompra | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoTotalDeudaCompra | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deuda de Avances (efectivo y cuotas)</td>
+                        <td class="text-center">{{ data.totalAvance | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoTotalAvance | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deuda de Súper Crédito (SAV)</td>
+                        <td class="text-center">{{ data.deudaSuperCredito | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoDeudaSuperCredito | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Deuda en dólares ( Monto en pesos según conversión al valor dólar vigente)</td>
+                        <td class="text-center">{{ data.deudaUSDPesos | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoDeudaUSD | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Otros (comisiones, gastos de cobranza, revolving, etc)</td>
+                        <td class="text-center">{{ data.otrosComisiones | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">{{ data.prepagoOtrosComisiones | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                    </tr>
+                    <tr>
+                        <td>Pagos (abonos) serán descontados del monto total de deuda*</td>
+                        <td class="text-center">{{ data.montoPago | backendCurrencyFormat : 'CLP' : true : true}}</td>
+                        <td class="text-center">&nbsp;</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Deuda Total</td>
+                        <td class="text-center">{{ data.deudaTotalDolarPesos | backendCurrencyFormat }}</td>
+                        <td class="text-center">{{ data.prepagoDeudaTotal | backendCurrencyFormat }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div class="gutter">
+                <app-notificacion [mensaje]="'Corresponde a pagos y/o abonos realizados entre la fecha de facturación y fecha de vencimiento de su último estado de cuenta.'" [customClass]="'mt0'"></app-notificacion>
+            </div>
+        </div>
+    </div>
+</div>

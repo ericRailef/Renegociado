@@ -1,0 +1,202 @@
+.modal {
+    position: fixed;
+    top: middle;
+    left: 0;
+    height: 500px;
+    z-index: 999;
+    text-align: center;
+    width: 100%;
+    display: none;
+}
+
+.modal h2 {
+    font-size: 20px;
+    font-weight: normal;
+    color: #444444;
+    line-height: 120%;
+}
+
+.modal.active {
+    display: block;
+}
+
+.modal-container {
+    display: inline-block;
+    text-align: left;
+    background-color: #fff;
+    border-radius: 4px;
+    max-width: 628px;
+    width: 90%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.modal-header {
+    position: relative;
+    padding: 15px;
+    border-bottom: solid 1px #DDDDDD;
+}
+
+@media screen and (max-width: 768px) {
+    .modal-header {
+        padding: 10px;
+    }
+    .modal-header .col-4.text-right {
+        text-align: left;
+    }
+}
+
+.modal-content {
+    max-height: 550px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.modal-content .gutter {
+    padding: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content .gutter {
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .modal-content {
+        max-height: 350px;
+    }
+}
+
+.btn {
+    font-size: 16px;
+    text-transform: none;
+}
+
+.modal-btn {
+    position: absolute;
+    top: -30px;
+    font-size: 20px;
+    display: block;
+    right: 0;
+    color: #fff;
+}
+
+.modal-btn:hover {
+    text-decoration: none;
+}
+
+.modal-indicator {
+    text-align: center;
+    padding-top: 38px;
+}
+
+.modal-indicator .modal-header {
+    border: none;
+}
+
+.modal-indicator .modal-icon {
+    display: block;
+    margin: 0 auto;
+    position: absolute;
+    top: -28px;
+    left: 0;
+    right: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.icon-exclamation:before {
+    content: "\e029";
+}
+
+.modal-indicator .modal-icon i:before {
+    line-height: 56px;
+}
+
+.modal-indicator .alert-text {
+    font-size: 12px;
+}
+
+.modal-icon {
+    width: 56px;
+    height: 56px;
+    text-align: center;
+    border-radius: 72px;
+    display: inline-block;
+    line-height: 58px;
+    font-size: 28px;
+    vertical-align: middle;
+    margin-bottom: 15px !important;
+}
+
+.icon-exclamation:before {
+    content: "\e029";
+}
+
+.modal-icon.modal-icon-info {
+    background-color: #1BB3BC;
+    color: #fff;
+}
+
+.modal-icon.modal-icon-alert {
+    background-color: #EC0000;
+    color: #fff;
+}
+
+.modal-icon.modal-icon-warning {
+    background-color: #E59E28;
+    color: #fff;
+}
+
+.modal-icon.modal-icon-success {
+    background-color: #ABC111;
+    color: #fff;
+}
+
+.gutter {
+    padding: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .gutter {
+        padding: 10px;
+    }
+}
+
+.mb10 {
+    margin-bottom: 10px;
+}
+
+.mt20 {
+    margin-top: 20px;
+}
+
+.actions {
+    padding: 20px 0;
+}
+
+.text.wrap-text {
+    white-space: pre-wrap;
+}
+
+.layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 998;
+    background-color: rgba(0, 0, 0, 0.66);
+}
+
+.layer.opacity {
+    display: block;
+}

@@ -1,0 +1,260 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+body {
+    font-size: 15px;
+    font-family: 'Open Sans', arial, sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 850px;
+    width: 100%;
+    background: url('../../../../assets/img/como-organizar-mis-platas.jpg') no-repeat left;
+    background-size: cover;
+    color: #fff;
+    height: 425px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, .3);
+}
+
+.lineas {
+    color: white;
+    font-size: 32px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+    text-align: center;
+    font-size: 0;
+    width: 100%;
+    margin: 0 auto 1rem;
+}
+
+.lineas:before,
+.lineas:after {
+    content: "";
+    width: 100%;
+    height: 1px;
+    background: white;
+    margin: 0 20px 0;
+}
+
+.lineas .icono {
+    font-size: 52px;
+}
+
+.title {
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 30px;
+}
+
+.text {
+    margin-bottom: 2rem;
+    font-size: 14px;
+    line-height: 1.3rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.btn {
+    text-align: center;
+    font-size: 16px;
+    line-height: 24px;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background-color: transparent;
+    border-radius: 24px;
+    cursor: pointer;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
+    font-weight: 400;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    outline: 0;
+    overflow: hidden;
+    -webkit-transition: all 195ms cubic-bezier(.4, 0, .2, 1);
+    transition: all 195ms cubic-bezier(.4, 0, .2, 1);
+    position: relative;
+    border: 1px solid transparent;
+    color: #ec0000;
+    padding: 11px 23px;
+    text-decoration: none;
+    background: #ec0000;
+    color: #fff;
+    text-transform: none;
+    min-width: 0;
+}
+
+.btn:hover {
+    background: #b30000;
+}
+
+.img-fluid {
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 15px;
+    background: rgba(0, 0, 0, 0);
+    transition: all .3s ease-in-out;
+}
+
+.col {
+    width: 55%;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.align-items-center {
+    align-items: center;
+    display: flex;
+}
+
+@media (max-width:660px) {
+    .row {
+        background: rgba(0, 0, 0, .32);
+        align-items: end;
+        padding: 20px 15px;
+        height: auto;
+        overflow: hidden;
+    }
+    .col {
+        width: 100%;
+    }
+    .h-100 {
+        height: auto;
+    }
+    br {
+        display: none;
+    }
+    .title,
+    .text {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width:480px) {
+    .container {
+        padding-top: 50vh;
+        height: 100%!important;
+        background: url("../../../../assets/img/como-organizar-mis-platas.jpg") no-repeat -80px top;
+        background-size: cover;
+    }
+}
+
+@media (max-width:376px) {
+    .container {
+        background: url("../../../../assets/img/como-organizar-mis-platas.jpg") no-repeat -120px top;
+        background-size: cover;
+    }
+}
+
+@font-face {
+    font-family: 'iconos-santander';
+    src: url('../../../../assets/fonts/welcome/iconos-santander.eot?2vyhsq');
+    src: url('../../../../assets/fonts/welcome/iconos-santander.eot?2vyhsq#iefix') format('embedded-opentype'), url('../../../../assets/fonts/welcome/iconos-santander.ttf?2vyhsq') format('truetype'), url('../../../../assets/fonts/welcome/iconos-santander.woff?2vyhsq') format('woff'), url('../../../../assets/fonts/welcome/iconos-santander.svg?2vyhsq#iconos-santander') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'iconos-santander' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-coin-stack:before {
+    content: "\e950";
+}
+
+.icon-coin-stack-o:before {
+    content: "\e951";
+}
+
+.icon-dinero:before {
+    content: "\e96a";
+}
+
+.icon-hand-coin:before {
+    content: "\e9bf";
+}
+
+.icon-money-bag:before {
+    content: "\ea05";
+}
+
+.icon-money-circle:before {
+    content: "\ea06";
+}
+
+.icon-money-circle-o:before {
+    content: "\ea08";
+}
+
+.icon-money-stack:before {
+    content: "\ea15";
+}
+
+.icon-money-stack-o:before {
+    content: "\ea16";
+}
+
+.icon-person-money:before {
+    content: "\ea58";
+}
+
+.icon-person-money-o:before {
+    content: "\ea59";
+}
+
+.icon-pig:before {
+    content: "\ea61";
+}
+
+.icon-pig-o:before {
+    content: "\ea62";
+}
+
+.icon-sanodelucas:before {
+    content: "\ea8d";
+}
+
+.icon-ahorro:before {
+    content: "\eab5";
+}

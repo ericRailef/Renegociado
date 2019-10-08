@@ -1,0 +1,29 @@
+<div *ngIf="display" class="{{ isError() ? 'layer' : 'layer  opacity' }}"></div>
+<div id="modal" *ngIf="display" class="modal modal-indicator no-gutter mb10 active">
+    <div class="modal-container">
+        <div class="modal-header">
+            <span class="modal-icon {{ modalIcon }}">
+              <i *ngIf="isWarning()">
+                <mat-icon>{{icono}}</mat-icon>
+              </i>
+              <i *ngIf="!isWarning()" [ngClass]="icono"></i>
+            </span>
+            <a *ngIf="hayAccionCerrar()" class="modal-btn" role="button" (click)="emitirAccionCerrar()">
+                <i class="icon-input-error"></i>
+            </a>
+        </div>
+        <div class="gutter text-center">
+            <h2 class="mb10">{{ titulo }}</h2>
+            <p *ngIf="detalle" class="text wrap-text">{{ detalle }}</p>
+            <p *ngIf="detalle2" class="text wrap-text mb10">{{ detalle2 }}</p>
+            <div class="actions text-center">
+                <div *ngIf="hayAccion1()">
+                    <a class="btn btn-primary" (click)="emitirAccion1();" role="button">{{ nombreAccion1 }}</a>
+                </div>
+                <div *ngIf="hayAccion2()" class="mt20">
+                    <a class="btn btn-primary mb10" (click)="emitirAccion2();">{{ nombreAccion2 }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

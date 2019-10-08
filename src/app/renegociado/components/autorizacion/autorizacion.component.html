@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="main">
+        <div class="actions text-center">
+            <a id="prev-page" href="javascript:;" class="btn btn-secundary" (click)="onClickVolverAtras()">Volver</a>
+        </div>
+        <div class="box no-gutter mb10">
+            <div class="box-header invert text-center">
+                <h2 class="title xsmall">Instrucciones y mandatos para suscribir contrato de Crédito de Consumo y Pagaré</h2>
+            </div>
+            <div class="box-content pad20">
+                <div [hidden]="!mandatoCargado" class="reader mandate mb20" state="0">
+                    <ng2-pdfjs-viewer #pdfViewer [openFile]="false" [downloadFileName]="'Instrucciones y mandatos para suscribir contrato de crédito y Pagaré'" [viewBookmark]="false"></ng2-pdfjs-viewer>
+                </div>
+            </div>
+        </div>
+        <div class="box no-gutter mb10">
+            <div class="row">
+                <div *ngIf="documentos.contratoServAutomatizados" class="col-6 brd-right">
+                    <app-visualizador-archivos [descripcion]="'Ver contrato de servicios  automatizados'" [tituloModal]="'Contrato de servicios automatizados.pdf'" [documento]="documentos.contratoServAutomatizados" (documentoError)="this.dialogoError.ver = true;"></app-visualizador-archivos>
+                </div>
+                <div *ngIf="documentos.contratoMarco" class="col-6 brd-right">
+                    <app-visualizador-archivos [descripcion]="'Ver contrato y hoja de resumen'" [tituloModal]="'Contrato y hoja de resumen.pdf'" [documento]="documentos.contratoMarco" (documentoError)="this.dialogoError.ver = true;"></app-visualizador-archivos>
+                </div>
+                <div *ngIf="documentos.contratoCompraVentaDivisas" class="col-12 brd-top">
+                    <app-visualizador-archivos [descripcion]="'Ver contrato marco de compra y/o venta de divisas'" [tituloModal]="'Contrato marco de compra y/o venta de divisas.pdf'" [documento]="documentos.contratoCompraVentaDivisas" (documentoError)="this.dialogoError.ver = true;"></app-visualizador-archivos>
+                </div>
+                <div class="col-12 brd-top">
+                    <div class="gutter">
+                        <div class="check mr15">
+                            <input type="checkbox" name="legal01" id="legal01" [(ngModel)]="dataUsuario.aceptaTerminosContrato" (change)="verificarAceptacionTerminos()" checked="">
+                            <label for="legal01">He leído los términos del contrato y hoja de resumen del Crédito.</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="dataUsuario.existenSeguros" class="box no-gutter mb10">
+            <div class="box-header gutter">
+                <strong>Para conocer las condiciones de los Seguros que estás por contratar, descarga y lee el documento a continuación:</strong>
+            </div>
+            <div class="row">
+                <div class="col-12 brd-top">
+                    <app-visualizador-archivos [descripcion]="'Formulario de Incorporación a las pólizas colectivas de Seguros.'" [tituloModal]="'Formulario de incorporación a las polizas colectivas de seguros.pdf'" [documento]="documentos.polizas" (documentoError)="this.dialogoError.ver = true;"></app-visualizador-archivos>
+                </div>
+                <div class="col-12 brd-top">
+                    <div class="gutter">
+                        <div class="check mr15">
+                            <input type="checkbox" name="legal02" id="legal02" [(ngModel)]="dataUsuario.aceptaPolizas" (change)="verificarAceptacionTerminos()">
+                            <label for="legal02">He leído y acepto la incorporación a las pólizas colectivas de Seguros indicadas en el formulario adjunto.</label>
+                        </div>
+                    </div>
+                    <app-notificacion [mensaje]="'Operacion sin derecho a retracto'" [tipo]="'warn'" [customClass]="'mt0'"></app-notificacion>
+
+                </div>
+            </div>
+        </div>
+
+        <div [ngStyle]="mostrarSuperClave ? { 'display': 'block' } : { 'display': 'none' }" class="box no-gutter mb10">
+            <div class="gutter">
+                <div class="box-header">
+                    <div class="box-title">
+                        <p class="mb0">Autorizar con SuperClave</p>
+                    </div>
+                </div>
+            </div>
+            <div class="box-content text-center pt20">
+                <!-- <h2 class="title medium mb10">SuperClave</h2> -->
+                <form id="superClaveForm" name="superClaveForm" #superClaveForm="ngForm" action="#" class="form form_security mb20 pt15 brd-top">
+                    <div class="form-field material">
+                        <input id="coord1" name="coord1" [(ngModel)]="dataUsuario.superClave.clave.clave1" #coord1="ngModel" (keydown)="soloNumeros($event);" (keyup)="cambiarFoco($event.target.value, 'coord2');" type="password" class="form-input" minlength="2" maxlength="2"
+                            required="">
+                        <label class="form-label">{{dataUsuario.superClave.desafio.coord1}}</label>
+                    </div>
+                    <div class="form-field material">
+                        <input id="coord2" name="coord2" [(ngModel)]="dataUsuario.superClave.clave.clave2" #coord2="ngModel" (keydown)="soloNumeros($event);" (keyup)="cambiarFoco($event.target.value, 'coord3');" type="password" class="form-input" minlength="2" maxlength="2"
+                            required="">
+                        <label class="form-label">{{dataUsuario.superClave.desafio.coord2}}</label>
+                    </div>
+                    <div class="form-field material">
+                        <input id="coord3" name="coord3" [(ngModel)]="dataUsuario.superClave.clave.clave3" #coord3="ngModel" (keydown)="soloNumeros($event);" type="password" class="form-input" minlength="2" maxlength="2" required="">
+                        <label class="form-label">{{dataUsuario.superClave.desafio.coord3}}</label>
+                    </div>
+                </form>
+                <app-notificacion [mensaje]="'Ingresa los dígitos indicados en las coordenadas de tu SuperClave. Verifica que tu tarjeta tiene el <b>Nº de serie ' + dataUsuario.superClave.nroTarjeta + '.</b>'" [customClass]="'mt0 text-left'"></app-notificacion>
+            </div>
+        </div>
+
+        <div class="actions flex">
+            <app-boton-volver-inicio (whenError)="verificarErrorVolver($event)"></app-boton-volver-inicio>
+            <button *ngIf="superClaveForm" class="btn" [disabled]="!mostrarSuperClave || superClaveForm.invalid || botonEnEjecucion" [ngClass]="(mostrarSuperClave && superClaveForm.valid) ? 'btn-primary btn-ico' : 'btn-primary-disabled btn-ico'" (click)="onClickContratar()">
+                  <span>Contratar</span>
+                  <i class="icon-arrow-right"></i>
+            </button>
+        </div>
+        <app-cond-generales [url]="'assets/external/condiciones_generales_conf_p2.html'"></app-cond-generales>
+    </div>
+</div>
+<app-alerta *ngIf="dialogoError.ver" [display]="true" [tipoAlerta]="dialogoError.tipo" [titulo]="dialogoError.titulo" [detalle]="dialogoError.detalle" [nombreAccion1]="dialogoError.labelBoton" (clickAccion1)="this.dialogoError.ver = false">
+</app-alerta>
+
+<app-alerta *ngIf="errorValidacionToken.ver" [display]="true" [tipoAlerta]="errorValidacionToken.tipo" [titulo]="errorValidacionToken.titulo" [detalle]="errorValidacionToken.detalle" [nombreAccion1]="errorValidacionToken.labelBoton" (clickAccion1)="intentarNuevamenteContratar();"
+    (accionCerrar)="errorValidacionToken.ver = false">
+</app-alerta>

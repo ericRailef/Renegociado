@@ -1,0 +1,18 @@
+<div class="box collapse mb15 no-gutter" [ngClass]="stateOpen ? 'open' : ''">
+    <div class="box-header half separate" (click)="onClickHeader()">
+        <div class="box-title">
+            Condiciones generales
+        </div>
+        <div class="box-action">
+            <a href="javascript:;" class="btn-collpase">
+                <i class="icon-arrow-down"></i>
+            </a>
+        </div>
+    </div>
+    <div class="box-container" [ngStyle]="{'max-height': paddingSize}">
+        <div class="box-content" #boxContent>
+            <div class="reading" [innerHTML]="innerHtml">
+            </div>
+        </div>
+    </div>
+</div>
